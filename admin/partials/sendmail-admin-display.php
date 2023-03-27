@@ -24,8 +24,8 @@ function sb_sendmail_submenu_page_content(){
         <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
         <form action="options.php" method="post">
             <?php 
-                settings_fields('statifysubhajitplugin_options');
-                do_settings_sections( 'statifysubhajitplugin' );
+                settings_fields('sb_sendmail_options');
+                do_settings_sections( 'sendmail' );
                 submit_button();
             ?>
         </form>
