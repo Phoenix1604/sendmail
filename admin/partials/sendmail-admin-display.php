@@ -25,7 +25,7 @@ function sb_sendmail_submenu_page_content(){
         <form action="options.php" method="post">
             <?php 
                 settings_fields('sb_sendmail_options');
-                do_settings_sections( 'sendmail' );
+                do_settings_sections( 'sb_sendmail' );
                 submit_button();
             ?>
         </form>

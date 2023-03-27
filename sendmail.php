@@ -73,6 +73,8 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-sendmail.php';
  *
  * @since    1.0.0
  */
+
+
 function run_sendmail() {
 
 	$plugin = new Sendmail();

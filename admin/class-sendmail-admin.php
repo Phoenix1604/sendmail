@@ -103,38 +103,39 @@ class Sendmail_Admin {
 
 	/* Add Sub Menu Field under settings section*/
 	public function sb_sendmail_submenu_page() {
-		include_once plugin_dir_path(__FILE__) .'/partials/sendmail-admin-display.php';
-		include_once plugin_dir_path(__FILE__) . '/partials/sendmail-settings-callback.php';
+		include_once plugin_dir_path(__FILE__) .'partials/sendmail-admin-display.php';
+		
 
 		add_submenu_page(
 			'options-general.php', 
 			'SendMail',
 			'Send Mail',
 			'manage_options',
-			'sb_sendmail_submenu_page',
+			'sb_sendmail',
 			'sb_sendmail_submenu_page_content'
 		);
 	}
 
 	public function sb_sendmail_register_settings(){
+		include_once plugin_dir_path(__FILE__) . 'partials/sendmail-settings-callback.php';
 		register_setting(
-			'sendmail_options',
-			's_options',
-			'subhajitplugin_callback_validate_options',
+			'sb_sendmail_options',
+			'sb_sendmail_options'
+			//'subhajitplugin_callback_validate_options',
 		);
 	
 		add_settings_section(
 			'sendmail_section_noofposts',
 			'Customize Number of Posts',
 			'sendmail_callback_section_noofposts',
-			'sendmail'
+			'sb_sendmail'
 		);
 
 		add_settings_field(
 			'no_of_posts',
 			'No of Posts',
 			'sb_sendmail_callback_field_text',
-			'sendmail',
+			'sb_sendmail',
 			'sendmail_section_noofposts',
 			[ 'id' => 'no-of-posts']
 		);
