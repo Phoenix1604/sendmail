@@ -100,4 +100,16 @@ class Sendmail_Admin {
 
 	}
 
+	public function sb_sendmail_submenu_page() {
+		include_once plugin_dir_path(__FILE__) .'/partials/sendmail-admin-display.php';
+		add_submenu_page(
+			'options-general.php', 
+			'SendMail',
+			'Send Mail',
+			'manage_options',
+			'sb_sendmail_submenu_page',
+			'sb_sendmail_submenu_page_content'
+		);
+	}
+
 }

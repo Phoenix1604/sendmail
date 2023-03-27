@@ -14,3 +14,23 @@
 ?>
 
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
+<?php
+
+function sb_sendmail_submenu_page_content(){
+
+    if(!current_user_can('manage_options')) return;
+    ?>
+    <div class="wrap">
+        <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
+        <form action="options.php" method="post">
+            <?php 
+                settings_fields('statifysubhajitplugin_options');
+                do_settings_sections( 'statifysubhajitplugin' );
+                submit_button();
+            ?>
+        </form>
+    </div>
+    <?php
+    
+}
+    
