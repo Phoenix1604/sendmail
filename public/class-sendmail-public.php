@@ -102,9 +102,9 @@ class Sendmail_Public {
 
 	function my_form_shortcode() {
 		$output = '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '">
-					<input type="text" name="my_text_field">
-					<input type="hidden" name="action" value="my_form_submission">
-					<button type="submit">Submit</button>
+					<input type="email" name="email">
+					<input type="hidden" name="action" value="sb_sendmail_form_submission">
+					<button type="submit">Subscribe</button>
 				  </form>';
 		return $output;
 	}
