@@ -100,4 +100,14 @@ class Sendmail_Public {
 
 	}
 
+	function my_form_shortcode() {
+		$output = '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '">
+					<input type="text" name="my_text_field">
+					<input type="hidden" name="action" value="my_form_submission">
+					<button type="submit">Submit</button>
+				  </form>';
+		return $output;
+	}
+	
+
 }

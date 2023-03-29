@@ -141,4 +141,8 @@ class Sendmail_Admin {
 		);
 	}
 
+	function my_form_submission_handler() {
+		echo "Successful!!";
+	}
+
 }
