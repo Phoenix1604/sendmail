@@ -112,11 +112,32 @@ class Sendmail_Public {
 	}
 
 	function my_email_form_submit() {
-		global $wpdb;
+
+		if (isset($_POST['email'])) {
+			$email = sanitize_email($_POST['email']);
+			$pattern = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
+			if (preg_match($pattern, $email)) {
+				$subscribed_mails = get_option('sendmail_subscribed_mails', array());
+				if (in_array($email, $subscribed_mails)) {
+					echo json_encode(array("message" => "Already Subscribed"));
+					wp_die();
+				}
+				$subscribed_mails[] = $email;
+				update_option('sendmail_subscribed_mails', $subscribed_mails);
+
+				include_once plugin_dir_path(__FILE__) . 'partials/sendmail-mail-to-subscriber.php';
+				sb_sendmail_mailsend($email);
+
+				echo json_encode(array("message" => "Successfully Subscribed"));
+				wp_die();
+			}
+
+			echo json_encode(array("message" => "Please enter a valid email"));
+			wp_die();
+		}
 		
-		$email = $_POST['email'];
 		
-		echo json_encode(array("email" => $email));
+		echo json_encode(array("response" => "Please enter a valid email"));
 		wp_die();
 	}
 	

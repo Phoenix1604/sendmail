@@ -140,30 +140,4 @@ class Sendmail_Admin {
 			[ 'id' => 'no-of-posts']
 		);
 	}
-
-	function sb_sendmail_form_submission_handler() {
-		include plugin_dir_path(__FILE__) . 'partials/sendmail-mail-to-subscriber.php';
-    // Check if the user is authorized to perform this action
-		
-		// Verify the nonce to ensure the request came from our form
-		//check_admin_referer( 'my_form_nonce' );
-		
-		// Get the form data
-		$email = sanitize_text_field( $_POST['email'] );
-		sb_sendmail_mailsend($email);
-		// Validate the form data
-		if (empty($email)) {
-			$error_message = 'Please fill in all fields.';
-			wp_redirect(add_query_arg('sendmail_error', $error_message, wp_get_referer()));
-			exit;
-		}
-		
-
-		
-		// Redirect the user back to the form with a success message
-		$success_message = 'Thank you for your submission!';
-		wp_redirect( add_query_arg( 'sendmail_success', $success_message, wp_get_referer() ) );
-		exit;
-	}
-
 }

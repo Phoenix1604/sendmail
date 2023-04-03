@@ -7,8 +7,9 @@ jQuery(document).ready(function ($) {
             url: my_email_form_ajax.ajaxurl,
             data: formData + '&action=my_email_form_submit',
             success: function (response) {
-                console.log(response);
-                $('#form-response').html('Thank you for subscribing!');
+                let json = JSON.parse(response);
+                console.log(json);
+                $('#form-response').html(json.message);
             }
         });
     });
