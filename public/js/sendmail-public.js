@@ -1,7 +1,7 @@
 jQuery(document).ready(function ($) {
     $('#my-email-form').submit(function (event) {
         event.preventDefault();
-        var formData = $(this).serialize();
+        let formData = $(this).serialize();
         $.ajax({
             type: 'POST',
             url: my_email_form_ajax.ajaxurl,
