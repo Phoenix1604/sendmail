@@ -97,16 +97,27 @@ class Sendmail_Public {
 		 */
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/sendmail-public.js', array( 'jquery' ), $this->version, false );
+		wp_localize_script($this->plugin_name, 'my_email_form_ajax', array('ajaxurl' => admin_url('admin-ajax.php')));
 
 	}
 
 	function my_form_shortcode() {
-		$output = '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '">
-					<input type="email" name="email">
-					<input type="hidden" name="action" value="sb_sendmail_form_submission">
-					<button type="submit">Subscribe</button>
-				  </form>';
+		$output = 
+		'<form id="my-email-form" method="post">
+        	<input type="email" name="email" placeholder="Enter your email address" required>
+        	<button type="submit" name="submit">Subscribe</button>
+    	</form>
+		<div id="form-response"></div>';
 		return $output;
+	}
+
+	function my_email_form_submit() {
+		global $wpdb;
+		
+		$email = $_POST['email'];
+		
+		echo json_encode(array("email" => $email));
+		wp_die();
 	}
 	
 

@@ -158,7 +158,7 @@ class Sendmail {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'sb_sendmail_submenu_page' );
 		$this->loader->add_action('admin_init', $plugin_admin, 'sb_sendmail_register_settings');
-		$this->loader->add_action( 'admin_post_sb_sendmail_form_submission', $plugin_admin, 'sb_sendmail_form_submission_handler' );
+		// $this->loader->add_action( 'admin_post_sb_sendmail_form_submission', $plugin_admin, 'sb_sendmail_form_submission_handler' );
 
 	}
 
@@ -177,6 +177,7 @@ class Sendmail {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 		//$this->loader->add_action( 'widgets_init', $plugin_public, 'myplugin_register_widgets');
 		add_shortcode( 'myshortcode', array($plugin_public, 'my_form_shortcode') );
+		$this->loader->add_action('wp_ajax_my_email_form_submit', $plugin_public, 'my_email_form_submit');
 	}
 
 	/**
