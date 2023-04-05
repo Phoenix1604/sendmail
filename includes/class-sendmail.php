@@ -175,11 +175,11 @@ class Sendmail {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
-		add_shortcode( 'myshortcode', array($plugin_public, 'my_form_shortcode') );
+		add_shortcode( 'sendmail_shortcode', array($plugin_public, 'sendmail_form_shortcode') );
 		//For logged in user ajax call
-		$this->loader->add_action('wp_ajax_my_email_form_submit', $plugin_public, 'my_email_form_submit');
+		$this->loader->add_action('wp_ajax_sendmail_email_form_submit', $plugin_public, 'sendmail_email_form_submit');
 		//For not logged in user ajax call
-		$this->loader->add_action('wp_ajax_nopriv_my_email_form_submit', $plugin_public, 'my_email_form_submit');
+		$this->loader->add_action('wp_ajax_nopriv_sendmail_email_form_submit', $plugin_public, 'sendmail_email_form_submit');
 	}
 
 	/**

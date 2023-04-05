@@ -97,13 +97,13 @@ class Sendmail_Public {
 		 */
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/sendmail-public.js', array( 'jquery' ), $this->version, false );
-		wp_localize_script($this->plugin_name, 'my_email_form_ajax', array('ajaxurl' => admin_url('admin-ajax.php')));
+		wp_localize_script($this->plugin_name, 'sendmail_email_form_ajax', array('ajaxurl' => admin_url('admin-ajax.php')));
 
 	}
 
-	function my_form_shortcode() {
+	function sendmail_form_shortcode() {
 		$output = 
-		'<form id="my-email-form" method="post">
+		'<form id="sendmail-email-form" method="post">
         	<input type="email" name="email" placeholder="Enter your email address" required>
         	<button type="submit" name="submit">Subscribe</button>
     	</form>
@@ -111,7 +111,7 @@ class Sendmail_Public {
 		return $output;
 	}
 
-	function my_email_form_submit() {
+	function sendmail_email_form_submit() {
 
 		if (isset($_POST['email'])) {
 			$email = sanitize_email($_POST['email']);

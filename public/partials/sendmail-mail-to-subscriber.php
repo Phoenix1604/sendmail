@@ -5,17 +5,18 @@ function sb_sendmail_mailsend($email) {
     $number_of_posts = get_option('sb_sendmail_options');
     $site_title = get_bloginfo( 'name' );
     $subject = "Hurray!! Welcome to " . $site_title;
-    $message = "You are Successfully subscribed for the daily updates of " . $site_title;
-    $message .= "\n";
-    $message .= "Here are our latest " . $number_of_posts['no-of-posts'] . " Posts";
-		$message .= "\n";
+    $message = "<h1>You are Successfully subscribed for the daily updates of " . $site_title . "</h1>";
+    $message .= "<br>";
+    $message .= "<br>";
+    $message .= "<h3>Here are our latest " . $number_of_posts['no-of-posts'] . " Posts</h3>";
+		$message .= "<br>";
 
     $summary = get_latest_post_details($number_of_posts['no-of-posts']);
 
 		foreach ($summary as $post_data) {
-			$message .= 'Title: ' . $post_data['title'] . "\n";
-			$message .= 'URL: ' . $post_data['url'] . "\n";
-			$message .= "\n";
+			$message .= 'Title: ' . $post_data['title'] . "\n<br>";
+			$message .= 'URL: <a>' . $post_data['url'] . "</a>\n<br>";
+			$message .= "<br>\n";
 		}
 
 		$headers = array(
