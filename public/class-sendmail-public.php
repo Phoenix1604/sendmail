@@ -20,7 +20,8 @@
  * @subpackage Sendmail/public
  * @author     Subhajit Bera <subhajit.bera@wisdmlabs.com>
  */
-class Sendmail_Public {
+class Sendmail_Public
+{
 
 	/**
 	 * The ID of this plugin.
@@ -47,11 +48,11 @@ class Sendmail_Public {
 	 * @param      string    $plugin_name       The name of the plugin.
 	 * @param      string    $version    The version of this plugin.
 	 */
-	public function __construct( $plugin_name, $version ) {
+	public function __construct($plugin_name, $version)
+	{
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
-
 	}
 
 	/**
@@ -59,7 +60,8 @@ class Sendmail_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_styles() {
+	public function enqueue_styles()
+	{
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -73,8 +75,7 @@ class Sendmail_Public {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/sendmail-public.css', array(), $this->version, 'all' );
-
+		wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/sendmail-public.css', array(), $this->version, 'all');
 	}
 
 	/**
@@ -82,7 +83,8 @@ class Sendmail_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_scripts() {
+	public function enqueue_scripts()
+	{
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -95,28 +97,35 @@ class Sendmail_Public {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/sendmail-public.js', array( 'jquery' ), $this->version, false );
-		wp_localize_script($this->plugin_name, 'sendmail_email_form_ajax', array('ajaxurl' => admin_url('admin-ajax.php')));
-
+		wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/sendmail-public.js', array('jquery'), $this->version, false);
+		wp_localize_script($this->plugin_name, 'sendmail_email_form_ajax', array('ajaxurl' => admin_url('admin-ajax.php'), 'nonce' => wp_create_nonce('sendmail_subscribe_me_nonce')));
 	}
 
-	function sendmail_form_shortcode() {
-		$output = 
-		'<form id="sendmail-email-form" method="post">
-        	<input type="email" name="email" placeholder="Enter your email address" required>
-        	<button type="submit" name="submit">Subscribe</button>
-    	</form>
+	function sendmail_form_shortcode($atts)
+	{
+		$atts = shortcode_atts(array('title' => 'Subscribe for more'), $atts, 'sendmail_shortcode');
+		ob_start();
+?>
+		<div class="sendmail-shortcode">
+			<h3 class="form-heading"><?php echo $atts['title'] ?></h3>
+			<form id="sendmail-email-form" method="post">
+				<input type="email" name="email" placeholder="Enter your email address" required>
+				<button type="submit" name="submit">Subscribe</button>
+			</form>
+		</div>
 		<div id="form-response"></div>';
+<?php
+		$output = ob_get_contents();
+		ob_get_clean();
 		return $output;
 	}
 
-	function sendmail_email_form_submit() {
+	function sendmail_email_form_submit()
+	{
 
-		if (isset($_POST['email'])) {
+		if (check_ajax_referer('sendmail_subscribe_me_nonce', 'nonce_data') && isset($_POST['email'])) {
 			$email = sanitize_email($_POST['email']);
-			$pattern = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
-			if (preg_match($pattern, $email)) {
+			if (is_email($email)) {
 				$subscribed_mails = get_option('sendmail_subscribed_mails', array());
 				if (in_array($email, $subscribed_mails)) {
 					echo json_encode(array("message" => "Already Subscribed"));
@@ -135,11 +144,5 @@ class Sendmail_Public {
 			echo json_encode(array("message" => "Please enter a valid email"));
 			wp_die();
 		}
-		
-		
-		echo json_encode(array("response" => "Please enter a valid email"));
-		wp_die();
 	}
-	
-
 }
